@@ -1,0 +1,50 @@
+# Dependencies
+node_modules/
+
+# Environment variables & secrets - NEVER commit
+.env
+.env.*
+!.env.example
+*.local
+*.pem
+*.key
+*credentials*
+
+# Hardhat
+cache/
+artifacts/
+typechain/
+typechain-types/
+coverage/
+coverage.json
+
+# Build output
+dist/
+build/
+
+# Hackathon submission (local only)
+HACKATHON_SUBMISSION.md
+
+# Claude Code
+.claude/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+nul
+
+# Logs
+*.log
+npm-debug.log*
+
+# Misc
+*.tgz
+.cache/

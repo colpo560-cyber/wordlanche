@@ -1,0 +1,34 @@
+name: Deploy to AWS Amplify
+
+on:
+  push:
+    branches:
+      - main
+      - test
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Amplify Deploy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_REGION: us-east-1
+        run: |
+          # Install AWS CLI
+          curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          unzip -q awscliv2.zip
+          sudo ./aws/install --update
+
+          # Get branch name
+          BRANCH_NAME=${GITHUB_REF#refs/heads/}
+          echo "Deploying branch: $BRANCH_NAME"
+
+          # Trigger Amplify build
+          aws amplify start-job \
+            --app-id dcfw70ks4eq5w \
+            --branch-name $BRANCH_NAME \
+            --job-type RELEASE
+
+          echo "Amplify deploy triggered for branch: $BRANCH_NAME"
